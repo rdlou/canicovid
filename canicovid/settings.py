@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 
 ELASTICSEARCH_DSL = {
     'default' : {
-        'hosts' : 'localhost:9200'
+        'hosts' : os.environ.get('ELASTIC_HOST')
     }
 }
 
