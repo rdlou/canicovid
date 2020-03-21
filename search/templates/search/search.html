@@ -1,0 +1,59 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+
+
+<div class="grid-container">
+
+
+
+    {% comment %} THIS IS THE SEARCH ROW {% endcomment %}
+    <div class="grid-item"></div>
+
+    <div class="grid-item">
+        <div id="search">
+                <form method="get">
+                    <input id="q" name="q" type="text" placeholder="Can I? Should I? When is? Who can? type your Covid-19 question here...">
+                </form>
+        </div>
+    </div>
+
+    <div class="grid-item"></div>
+
+
+
+
+    {% comment %} THIS IS THE RESULTS ROW {% endcomment %}
+    <div class="grid-item"></div>
+
+    <div class="grid-item">
+        {% if questions %}
+        <div id="answer">
+            {% for q in questions.0 %}
+            <h4>Matched question: {{ q.question }}</h4>
+            <h5>{{ q.answer.answer }}</h5>
+            <a href="upvote/?answer_id={{ q.answer.pk }}&q={{ user_q }}">up</a>
+            <a href="downvote/?q={{ user_q }}">not helpful</a>
+            <a href="incorrect/?q={{ user_q }}&a={{ q.answer.answer }}">incorrect info</a>
+            {% endfor %}  
+        </div>
+        {% endif %}
+    </div>
+
+
+
+
+
+    <div class="grid-item">
+        {% if questions.count > 1 %}
+        <p>Other matched questions</p>
+        {% for item in questions|slice:"1:" %}
+            <a href="/search/?q={{item.question}}">{{item.question}}</a>
+            <br><br>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="grid-item"></div>
+
+</div>
